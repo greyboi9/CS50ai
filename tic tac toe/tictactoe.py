@@ -3,6 +3,7 @@ Tic Tac Toe Player
 """
 
 import math
+import copy
 
 X = "X"
 O = "O"
@@ -39,14 +40,20 @@ def actions(board):
     return possible_actions
 
 
-def result(board, action):
-    if action not in action(board):
-        raise Exception("invalide Action")
-
-    player_move = player(board)
-    new_board= [row.copy for row in board]
-    new_board[action[0]][action[1]]= player_move
-
+def result(board, selected_action):
+    # Create a deep copy of the board
+    new_board = copy.deepcopy(board)
+    
+    # Extract the row and column from the selected action
+    row, col = selected_action
+    
+    # Check if the selected cell is empty
+    if new_board[row][col] != EMPTY:
+        raise Exception("Invalid action: Cell is not empty")
+    
+    # Update the board with the current player's move
+    new_board[row][col] = player(board)
+    
     return new_board
 
 
